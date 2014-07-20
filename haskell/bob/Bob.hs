@@ -2,21 +2,28 @@ module Bob ( responseFor ) where
 
 import Data.Char
 
-type Phrase = String
+data TeenTalk = Empty | Yell | Question | NonSense
+                      deriving (Show)
 
-responseFor :: Phrase -> String
-responseFor phrase
-  | isEmpty phrase    = "Fine. Be that way!"
-  | isYell phrase     = "Woah, chill out!"
-  | isQuestion phrase = "Sure."
-  | otherwise         = "Whatever."
+responseFor :: String -> String
+responseFor phrase = case toTeenTalk phrase of
+  Empty    -> "Fine. Be that way!"
+  Yell     -> "Woah, chill out!"
+  Question -> "Sure."
+  NonSense -> "Whatever."
 
-isQuestion :: Phrase -> Bool
+toTeenTalk :: String -> TeenTalk
+toTeenTalk phrase
+  | isEmpty phrase    = Empty
+  | isYell phrase     = Yell
+  | isQuestion phrase = Question
+  | otherwise         = NonSense
+
+isQuestion :: String -> Bool
 isQuestion phrase = last phrase == '?'
 
-isYell :: Phrase -> Bool
+isYell :: String -> Bool
 isYell phrase = all (not . isLower) phrase && any isUpper phrase
-                where
 
-isEmpty :: Phrase -> Bool
+isEmpty :: String -> Bool
 isEmpty phrase = all isSpace phrase
