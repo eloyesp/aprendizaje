@@ -3,7 +3,7 @@ module Bob ( responseFor ) where
 import Data.Char
 
 data TeenTalk = Empty | Yell | Question | NonSense
-                      deriving (Show)
+                deriving (Show)
 
 responseFor :: String -> String
 responseFor phrase = case toTeenTalk phrase of
@@ -26,4 +26,4 @@ isYell :: String -> Bool
 isYell phrase = all (not . isLower) phrase && any isUpper phrase
 
 isEmpty :: String -> Bool
-isEmpty phrase = all isSpace phrase
+isEmpty = all isSpace
